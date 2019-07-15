@@ -1,0 +1,44 @@
+# projectId: cjxujc5qm3n6k0103013jt92p
+# version: 33
+
+type File @model {
+  contentType: String!
+  createdAt: DateTime!
+  id: ID! @isUnique
+  name: String!
+  secret: String! @isUnique
+  size: Int!
+  updatedAt: DateTime!
+  url: String! @isUnique
+}
+
+type Link @model {
+  createdAt: DateTime!
+  description: String!
+  id: ID! @isUnique
+  postedBy: User @relation(name: "UsersLinks")
+  updatedAt: DateTime!
+  url: String!
+  votes: Vote @relation(name: "VotesOnLink")
+}
+
+type User @model {
+  createdAt: DateTime!
+  id: ID! @isUnique
+  updatedAt: DateTime!
+  name: String!
+  email: String @isUnique
+  password: String
+  links: Link @relation(name: "UsersLinks")
+  votes: Vote @relation(name: "UsersVotes")
+}
+
+
+type Vote @model {
+  count:Int
+  createdAt: DateTime!
+  id: ID! @isUnique
+  link: Link @relation(name: "VotesOnLink")
+  updatedAt: DateTime!
+  user: User @relation(name: "UsersVotes")
+}
